@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .delete-button {
+            background-color: rgb(218, 40, 40);
+            border: none;
+            height: 40px;
+            width: 100px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <input class="message" type="text">
+    <input class = "datemess" type="date">
+    <button class="add">add</button>
+    <div class="deev">
+        
+    </div>
+
+    <script>
+        const list = [{
+            message: '',
+            duedate: ''
+        }]
+        function addinglist() {
+            let htmlmessage = '';
+            for(let i = 1; i < list.length; i++) {
+            const messageval = list[i];
+            console.log(i);
+            const messages = messageval.message;
+            const duedates = messageval.duedate;
+            const html = `<p>${messages} ${duedates} <button class = "delete-button" onclick = "list.splice(${i}, 1); 
+                addinglist();">delete</button></p> `;
+            htmlmessage += html;
+           
+        }
+        
+        document.querySelector('.deev').innerHTML = htmlmessage;
+        }
+        addinglist();
+
+        document.querySelector('.add')
+        .addEventListener('click', ()=> {
+            const messages = document.querySelector('.message');
+            const duedated = document.querySelector('.datemess');
+            const duedate = duedated.value;
+            const message = messages.value;
+            
+            list.push({
+                message,
+                duedate
+            });
+            messages.value = '';
+            addinglist();
+            
+        });
+
+
+    </script>
+</body>
+</html>
