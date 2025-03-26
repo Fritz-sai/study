@@ -1,5 +1,5 @@
 import {products} from './data/products.js';
-import {cart, addingcart} from '/cart.js';
+import {cart, addingcart} from './cart.js';
 
 let amazon = '';
 
@@ -28,7 +28,7 @@ products.forEach((item)=> {
           </div>
 
           <div class="product-quantity-container">
-            <select>
+            <select id = "${item.id}">
               <option selected value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -44,7 +44,7 @@ products.forEach((item)=> {
 
           <div class="product-spacer"></div>
 
-          <div class="added-to-cart" id = "${item.id}" >
+          <div class="added-to-cart" id = "added${item.id}" >
             <img src="images/icons/checkmark.png">
             Added
           </div>
@@ -56,25 +56,45 @@ products.forEach((item)=> {
         </div>`
        
 });
+
+let cartquantity = Number(0);
+
 document.querySelector('.products-grid').innerHTML = amazon;
+
+
 document.querySelectorAll('.button-primary').forEach((button)=> {
     button.addEventListener('click', ()=> {
       const idproduct = button.dataset.productId;
-      addingcart(idproduct);
-      let cartquantity = 0;
-      cart.forEach((item)=>{
-        if(item.quantity) {
-        cartquantity = cartquantity + item.quantity;
-        }
-    });
-    console.log(cartquantity);
-    document.querySelector('.cart-quantity').innerHTML = cartquantity;
-      const popout = document.getElementById(`${idproduct}`);
+      const num = document.getElementById(idproduct);
+      const hehe = Number(num.value);
+      console.log(hehe);
+      addingcart(idproduct, hehe);
+      cartNum(cartquantity);
+      const popout = document.getElementById(`added${idproduct}`);
       popout.style.opacity = 1;
       setTimeout (()=> {
         popout.style.opacity = 0;
       }, 2000);
 
+    });
+   
+
     
-})});
+});
+
+
+function cartNum(cartquantity) {
+ 
+  cart.forEach((item)=>{
+    if(item.quantity) {
+    cartquantity += Number(item.quantity);
+    }});
+    console.log(cartquantity);
+  document.querySelector('.cart-quantity').innerHTML = cartquantity;
+  
+}
+
+cartNum(cartquantity);
+
+
 

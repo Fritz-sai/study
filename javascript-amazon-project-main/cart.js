@@ -2,37 +2,45 @@ export let cart = JSON.parse(localStorage.getItem('cart'));
     if (!cart) {
         cart = [{
         }]
-    }  else {
-        // Ensure all items in the cart have a valid quantity
-        cart.forEach((item) => {
-            if (item.quantity === null || item.quantity === undefined) {
-                item.quantity = 1; // Initialize quantity if it's null or undefined
-            }
-        });
-    }
+    } 
 
 
 export function savethecart () {
     localStorage.setItem('cart', JSON.stringify(cart));
 }
 
-export function addingcart(idproduct) {
+export function addingcart(idproduct, hehe) {
+
+    
     let matching;
           cart.forEach((item)=>{
             if (idproduct === item.id) {
                 matching = item;
             }
           });
-          console.log(cart);
           if (matching) {
-            matching.quantity += 1;
+            let quantity = Number(matching.quantity);
+            quantity += hehe;
+            matching.quantity = quantity;
+            console.log(quantity);
           } else {
             cart.push({
               id: idproduct,
-              quantity: 1
+              quantity: hehe
             });
           }
           
-            
+          console.log(cart); 
           savethecart();
+}
+
+export function removeFromCart(productid) {
+  const newcart = []
+
+  cart.forEach((item)=> {
+    if (item.id !== productid) {
+      newcart.push(item);
+    }
+  });
+  cart = newcart;
 }
