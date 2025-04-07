@@ -1,14 +1,14 @@
 import { products } from "./data/products.js";
 import { deliveryOption } from "./data/deliveryOption.js";
-import { cart, removeFromCart, savethecart } from "./cart.js";
+import { cart, removeFromCart, savethecart, updateDelivery } from "./cart.js";
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 
-console.log(cart);
+function render() {
 let checkoutHTML = '';
 cart.forEach((item) => {
     const idproduct = item.id;
     const producto = products.find(product => product.id === idproduct);
-    console.log(item);
+
 
     const x = item.deliveryOptionId || '1';
 
@@ -86,7 +86,9 @@ function deliveryHTML(producto, item) {
       : (option.pricecents / 100).toFixed(2);
 
     html += `
-      <div class="delivery-option">
+      <div class="delivery-option js-option"
+      data-product-id = ${producto.id}
+      data-delivery-id = ${option.id}>
         <input type="radio"
           ${ischecked ? 'checked' : ''}
           class="delivery-option-input"
@@ -174,6 +176,20 @@ document.querySelectorAll('.update-quantity-link').forEach((element) => {
     });
   });  
 
+  document.querySelectorAll('.js-option')
+  .forEach((x) => {
+    x.addEventListener('click', () => {
+      
+      const producto = x.dataset.productId;
+      const option = x.dataset.deliveryId;
+
+
+      updateDelivery(producto, option);
+      render();
+    });
+  });
+}
+render();
 
 
 
