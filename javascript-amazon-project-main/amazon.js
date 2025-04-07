@@ -68,6 +68,7 @@ document.querySelectorAll('.button-primary').forEach((button)=> {
       const num = document.getElementById(idproduct);
       const hehe = Number(num.value);
       console.log(hehe);
+      console.log(idproduct);
       addingcart(idproduct, hehe);
       cartNum(cartquantity);
       const popout = document.getElementById(`added${idproduct}`);

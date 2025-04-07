@@ -26,7 +26,8 @@ export function addingcart(idproduct, hehe) {
           } else {
             cart.push({
               id: idproduct,
-              quantity: hehe
+              quantity: hehe,
+              deliveryOptionId: '1'
             });
           }
           
