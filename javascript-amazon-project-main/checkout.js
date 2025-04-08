@@ -2,8 +2,11 @@ import { products } from "./data/products.js";
 import { deliveryOption } from "./data/deliveryOption.js";
 import { cart, removeFromCart, savethecart, updateDelivery } from "./cart.js";
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
+import { orderPaymentSummary } from "./payment.js";
+
 
 function render() {
+  
 let checkoutHTML = '';
 cart.forEach((item) => {
     const idproduct = item.id;
@@ -17,6 +20,7 @@ cart.forEach((item) => {
     const day = dayjs();
     const date = day.add(hehehe.days, 'days');
     const daystring = date.format('dddd, MMMM D');
+
         
     if (producto) {
         checkoutHTML += ` 
@@ -116,6 +120,7 @@ document.querySelectorAll('.js-delete').forEach((link)=> {
   link.addEventListener('click', ()=> {
     const productid = link.dataset.deleteId;
     removeFromCart(productid);
+    orderPaymentSummary(cart, products, deliveryOption);
     
     /*to update the HTML */
     const container = document.querySelector(`.js-container${productid}`);
@@ -169,6 +174,7 @@ document.querySelectorAll('.update-quantity-link').forEach((element) => {
         document.querySelector(`.js-update${saveid}`).style.display = "initial";
         
       }
+      orderPaymentSummary(cart, products, deliveryOption);
       savethecart();
       
       
@@ -188,7 +194,12 @@ document.querySelectorAll('.update-quantity-link').forEach((element) => {
       render();
     });
   });
+  orderPaymentSummary(cart, products, deliveryOption);
+ 
 }
+
+
+
 render();
 
 

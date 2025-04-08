@@ -62,8 +62,6 @@ export function updateDelivery (producto, option) {
   if (matching) {
     
     matching.deliveryOptionId = option;
-    const deliverymatching = matching.deliveryOptionId;
-
     savethecart();
 }
 }
